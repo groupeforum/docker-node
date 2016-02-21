@@ -15,16 +15,13 @@ RUN curl -sSL https://nodejs.org/dist/${NODE_VERSION}/node-${NODE_VERSION}.tar.g
 	&& NPROC=$(grep -c ^processor /proc/cpuinfo 2>/dev/null || 1) \
 	&& make -j${NPROC} \
 	&& make install \
-	&& paxctl -cm /usr/bin/node
-
-# Install Nodemon for development
-RUN npm install -g nodemon \
-	&& npm cache clean
-
-# Remove many things to lighten the image
-RUN apk del curl make gcc g++ binutils-gold python linux-headers paxctl \
-	&& rm -rf /node-${NODE_VERSION} /etc/ssl /usr/include \
-		/usr/share/man /tmp/* /var/cache/apk/* /root/.npm /root/.node-gyp \
-		/usr/lib/node_modules/npm/man /usr/lib/node_modules/npm/doc /usr/lib/node_modules/npm/html
+	&& paxctl -cm /usr/bin/node \
+	&& npm install -g npm nodemon \
+	&& npm cache clean \
+	&& apk del make gcc g++ python linux-headers \
+	&& rm -rf /root/src /tmp/* /usr/share/man /var/cache/apk/* \
+		/root/.npm /root/.node-gyp /usr/lib/node_modules/npm/man \
+		/usr/lib/node_modules/npm/doc /usr/lib/node_modules/npm/html \
+	&& apk search --update
 
 WORKDIR /usr/src
