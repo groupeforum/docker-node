@@ -2,14 +2,12 @@ FROM alpine:3.3
 
 MAINTAINER Florian Girardey <florian@girardey.net>
 
-## Install Node.js required packages
-RUN apk add --no-cache curl make gcc g++ binutils-gold python linux-headers paxctl libgcc libstdc++
-
 ENV NODE_VERSION v4.3.1
 ENV NODE_ENV production
 
 # Install Node.js
-RUN curl -sSL https://nodejs.org/dist/${NODE_VERSION}/node-${NODE_VERSION}.tar.gz | tar -xz \
+RUN apk add --no-cache curl make gcc g++ binutils-gold python linux-headers paxctl libgcc libstdc++ \
+	&& curl -sSL https://nodejs.org/dist/${NODE_VERSION}/node-${NODE_VERSION}.tar.gz | tar -xz \
 	&& cd /node-${NODE_VERSION} \
 	&& ./configure --prefix=/usr --without-snapshot \
 	&& NPROC=$(grep -c ^processor /proc/cpuinfo 2>/dev/null || 1) \
