@@ -5,13 +5,15 @@ MAINTAINER Florian Girardey <florian@girardey.net>
 ENV NODE_VERSION v4.3.1
 ENV NODE_ENV production
 
-# Install Node.js
-RUN apk add --no-cache curl make gcc g++ binutils-gold python linux-headers paxctl libgcc libstdc++ \
+RUN apk upgrade --update \
+	&& apk add curl make gcc g++ linux-headers paxctl musl-dev \
+		libgcc libstdc++ binutils-gold python openssl-dev zlib-dev \
+	&& mkdir -p /root/src \
+	&& cd /root/src \    
 	&& curl -sSL https://nodejs.org/dist/${NODE_VERSION}/node-${NODE_VERSION}.tar.gz | tar -xz \
-	&& cd /node-${NODE_VERSION} \
+	&& cd /root/src/node-* \
 	&& ./configure --prefix=/usr --without-snapshot \
-	&& NPROC=$(grep -c ^processor /proc/cpuinfo 2>/dev/null || 1) \
-	&& make -j${NPROC} \
+	&& make -j$(grep -c ^processor /proc/cpuinfo 2>/dev/null || 1) \
 	&& make install \
 	&& paxctl -cm /usr/bin/node \
 	&& npm install -g npm nodemon \
