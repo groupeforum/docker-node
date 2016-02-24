@@ -16,7 +16,7 @@ RUN apk upgrade --update \
 	&& make -j$(grep -c ^processor /proc/cpuinfo 2>/dev/null || 1) \
 	&& make install \
 	&& paxctl -cm /usr/bin/node \
-	&& npm install -g npm nodemon \
+	&& npm install -g npm \
 	&& npm cache clean \
 	&& apk del make gcc g++ python linux-headers \
 	&& rm -rf /root/src /tmp/* /usr/share/man /var/cache/apk/* \
