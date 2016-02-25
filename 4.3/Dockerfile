@@ -6,7 +6,7 @@ ENV NODE_VERSION v4.3.1
 ENV NODE_ENV production
 
 RUN apk add --update libgcc libstdc++ curl make gcc g++ python linux-headers paxctl binutils-gold \
-	&& cd /tmp \    
+	&& cd /tmp \
 	&& curl -sSL https://nodejs.org/dist/${NODE_VERSION}/node-${NODE_VERSION}.tar.gz | tar -xz \
 	&& cd /tmp/node-${NODE_VERSION} \
 	&& ./configure --prefix=/usr --without-snapshot \
