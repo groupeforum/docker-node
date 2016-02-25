@@ -3,7 +3,7 @@ FROM alpine:3.3
 MAINTAINER Florian Girardey <florian@girardey.net>
 
 ENV NODE_VERSION v4.3.1
-ENV NPM_VERSION 3
+ENV NPM_VERSION 2
 ENV NODE_ENV production
 
 RUN apk add --update libgcc libstdc++ curl make gcc g++ python linux-headers paxctl binutils-gold \
