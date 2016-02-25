@@ -14,7 +14,7 @@ RUN apk add --update libgcc libstdc++ curl make gcc g++ python linux-headers pax
 	&& make -j $(grep -c ^processor /proc/cpuinfo 2>/dev/null || 1) \
 	&& make install \
 	&& paxctl -cm /usr/bin/node \
-	&& curl -L https://www.npmjs.com/install.sh | sh \
+	&& curl -O https://www.npmjs.com/install.sh | sh \
 	&& npm install -g npm@${NPM_VERSION} nodemon \
 	&& find /usr/lib/node_modules/npm -name test -o -name .bin -type d | xargs rm -rf \
 	&& apk del curl make gcc g++ python linux-headers paxctl binutils-gold \
