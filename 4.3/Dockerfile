@@ -8,8 +8,7 @@ ENV NODE_ENV production
 
 RUN apk add --update libgcc libstdc++ curl make gcc g++ python linux-headers paxctl binutils-gold \
 	&& cd /tmp \    
-	&& curl -sSL https://nodejs.org/dist/${NODE_VERSION}/node-${NODE_VERSION}.tar.gz \
-	&& tar xzf node-${NODE_VERSION}.tar.gz \
+	&& curl -sSL https://nodejs.org/dist/${NODE_VERSION}/node-${NODE_VERSION}.tar.gz | tar xzf \
 	&& cd /tmp/node-${NODE_VERSION} \
 	&& ./configure --prefix=/usr --without-snapshot \
 	&& make -j $(grep -c ^processor /proc/cpuinfo 2>/dev/null || 1) \
