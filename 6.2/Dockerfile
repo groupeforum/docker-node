@@ -2,7 +2,7 @@ FROM alpine:3.3
 
 MAINTAINER Florian Girardey <florian@girardey.net>
 
-ENV NODE_VERSION v6.2.0
+ENV NODE_VERSION v6.2.1
 ENV NPM_VERSION 3
 ENV NODE_ENV production
 
