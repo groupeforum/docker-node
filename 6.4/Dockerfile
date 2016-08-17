@@ -2,7 +2,8 @@ FROM alpine:3.3
 
 MAINTAINER Florian Girardey <florian@girardey.net>
 
-ENV NODE_VERSION v4.4.7
+ENV NODE_VERSION v6.4.0
+ENV NPM_VERSION 3
 ENV NODE_ENV production
 
 RUN apk add --update libgcc libstdc++ curl make gcc g++ python linux-headers paxctl binutils-gold \
@@ -13,7 +14,7 @@ RUN apk add --update libgcc libstdc++ curl make gcc g++ python linux-headers pax
 	&& make -j $(grep -c ^processor /proc/cpuinfo 2>/dev/null || 1) \
 	&& make install \
 	&& paxctl -cm /usr/bin/node \
-	&& npm install -g nodemon \
+	&& npm install -g npm@${NPM_VERSION} nodemon \
 	&& find /usr/lib/node_modules/npm -name test -o -name .bin -type d | xargs rm -rf \
 	&& apk del curl make gcc g++ python linux-headers paxctl binutils-gold \
 	&& rm -rf /tmp/* \
